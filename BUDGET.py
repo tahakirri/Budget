@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Budget Manager 2025", layout="wide")
 
@@ -48,11 +47,8 @@ st.subheader("📊 Expenses by Category")
 expense_data = df[df["Category"] != "Income"]
 category_totals = expense_data.groupby("Category")["Amount"].sum()
 
-fig, ax = plt.subplots()
-category_totals.plot(kind="bar", ax=ax)
-ax.set_ylabel("Amount ($)")
-ax.set_title("Expenses by Category")
-st.pyplot(fig)
+if not category_totals.empty:
+    st.bar_chart(category_totals)
 
 # Export option
 st.download_button(
